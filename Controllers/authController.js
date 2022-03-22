@@ -70,6 +70,9 @@ exports.registerUser = (req, res, next) => {
     if (req.body.role === "employee") {
         //res.redirect(307,"/employees")
     }
+
+    
+
     let user = new User({
         email: req.body.email,
         name: req.body.name,
@@ -80,15 +83,20 @@ exports.registerUser = (req, res, next) => {
         role: req.body.role,
         image:req.file.image
     });
-    user.save().then(data => {
 
-        let token = jwt.sign({
-            email: body.email,
-            role: data.role,
-            id: data._id
-        }, process.env.secret_key, { expiresIn: "1h" });
-        res.status(200).json({ data: "you r in", body: req.email, token })
+    let token = jwt.sign({
+        email: body.email,
+        role: data.role,
+        id: data._id
+    }, process.env.secret_key, { expiresIn: "1h" });
+    
+    bcrypt.genSalt(10).then(async salt => {
+        user.password = await bcrypt.hash(user.password, salt);
+        user.save().then(data => {
+            res.status(200).json({ data: "you r in", body: req.email, token })
+        })
     })
+    
         
         
 }
