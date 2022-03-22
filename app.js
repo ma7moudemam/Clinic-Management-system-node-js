@@ -3,9 +3,25 @@ const body_parser = require("body-parser");
 const mongoose = require("mongoose");
 
 //Routes
+const multer = require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+	destination: (request, file, callback) => {
+		callback(null, path.join(__dirname, "images"));
+	},
+	filename: (req, file, callback) => {
+		callback(null, new Date().toLocaleDateString().replace(/\//g, "-") + "-" + file.originalname);
+	},
+});
+const limits = { fileSize: 838861 };
+const fileFilter = (request, file, callback) => {
+	if (file.mimetype == "image/jpeg" || file.mimetype == "image/jpg" || file.mimetype == "image/png")
+		callback(null, true);
+};
 const clinicRoute = require("./Routers/clinicRoute")
 const prescriptionRoute = require("./Routers/prescriptionRoute");
-
+const userRoute = require("./Routers/userRouter");
 const app = express();
 mongoose.connect("mongodb://localhost:27017/CMS")
     .then(() => {
@@ -32,8 +48,10 @@ app.use((req, res, next) => {
 });
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }))
-
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(multer({ storage, limits, fileFilter }).array("image"));
 // Routing
+app.use(userRoute)
 app.use(clinicRoute)
 app.use(prescriptionRoute)
 // errors Middleware
