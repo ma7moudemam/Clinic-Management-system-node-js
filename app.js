@@ -1,6 +1,7 @@
 const express = require("express");
 const body_parser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors")
 
 //Routes
 const multer = require("multer");
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
     console.log(req.method, req.url)
     next()
 });
-
+app.use(cors());
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
