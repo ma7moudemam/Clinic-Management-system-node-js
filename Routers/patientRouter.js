@@ -10,4 +10,7 @@ router.delete("/", patientControllers.deletePatient);
 router.get("/filter", patientControllers.filterPatients);
 router.get("/sort", patientControllers.sortPatients); 
 
+router.get("/chart", patientControllers.getStatistic);
+
+
 module.exports = router;

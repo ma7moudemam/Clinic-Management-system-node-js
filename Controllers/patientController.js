@@ -114,43 +114,15 @@ exports.sortPatients = (req, res, next) => {
     });
 };
 
-/*
-get invoices
-{
-	"_id": 52,
-	"price": 80,
-	"payment": [
-		"credit"
-	],
-	"patient_id": [
-		{
-			"location": {
-				"governorate": "Alex"
-			},
-			"_id": 61,
-			"name": "2",
-			"gender": "M",
-			"age": 22,
-			"invoice_id": [],
-			"__v": 0
-		}
-	],
-	"date": "2022-03-18T17:54:44.838Z",
-	"__v": 0
+// male&female chart
+exports.getStatistic = async (req, res, next) => {
+    errorHandeler(req);
+
+    try {
+        const maleToFemale = await PatientModel.statistic()
+        res.status(201).send({maleToFemale})
+        
+    } catch (e) {
+     res.status(400).send(e)   
+    }
 }
-
-
-
-get patient
- {
-	"location": {
-		"governorate": "Alex"
-	},
-	"_id": 60,
-	"name": "1",
-	"gender": "M",
-	"age": 22,
-	"invoice_id": [],
-	"__v": 0
-},
-*/

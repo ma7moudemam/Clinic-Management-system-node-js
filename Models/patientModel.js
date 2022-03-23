@@ -29,6 +29,18 @@ const schema = new mongoose.Schema(
 	{ _id: false }
 );
 
+schema.statics.statistic = async function () {
+	let female = 0;
+	let male = 0;
+    const males = await this.find({"gender":"F"})
+    const females = await this.find({"gender":"M"})
+
+    female = females.length
+    male = males.length
+
+	return `M ${male} : F ${female}`;
+};
+
 schema.plugin(autoIncrement, { id: "patients-auto-increament", inc_field: "_id" });
 module.exports = mongoose.model("patient", schema);
 

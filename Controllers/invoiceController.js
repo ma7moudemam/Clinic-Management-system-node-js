@@ -39,27 +39,7 @@ exports.createInvoice = (req, res, next) => {
 			})
 		}
 		
-	})
-	// .catch((e) => {
-	// 	res.status(500).send(e);
-	// });
-
-	// if(PatientModel._id != req.body.patient_id){
-	// 	let object = new InvoiceModel({
-	// 	price: req.body.price,
-	// 	payment: req.body.payment,
-    //     patient_id : req.body.patient_id
-	// });
-	// object
-	// 	.save()
-	// 	.then((data) =>
-	// 		res.status(200).json({ data }),
-	// 		)
-	// 	.catch((error) => next(error));
-	// }else {
-
-	// }
-    
+	})    
 };
 
 exports.getInvoice = (req, res, next) => {
@@ -115,3 +95,40 @@ exports.deleteInvoice = (req, res, next) => {
 		});
 };
 
+// totleIncome
+exports.getTotleIncome = async (req, res, next) => {
+	InvoiceModel.find({})
+		.then((data) => {	
+			let i=0;
+			let incomeArray = [];
+			const reducer = (accumulator, curr) => accumulator + curr;
+			let totleIncome = 0;
+			// [{"price"}]
+			while(i < data.length){
+				incomeArray.push(data[i]["price"]) 
+				i++
+			}
+			totleIncome = incomeArray.reduce(reducer)
+			// express deprecated res.send(status): Use res.sendStatus(status) instead 
+			res.sendStatus(totleIncome)
+		})
+		.catch((e) => {
+			res.status(500).send(e);
+		});
+};
+
+// invoicesReport
+exports.getPatientInvoice = (req, res, next) => {
+	errorHandeler(req);
+
+    PatientModel.findById(req.body._id).populate("invoice_id")
+		.then((data) => {
+
+			let patientInvoices = data["invoice_id"]
+
+			res.status(200).send(patientInvoices);
+		})
+		.catch((e) => {
+			res.status(500).send(e);
+		});
+};
