@@ -18,8 +18,9 @@ exports.getAllUsers = (req, res, next) => {
 
 exports.getUserByRole = (req, res) => {
     errHandler(req)
-
-    User.find({ role: req.params.id })
+     
+    let role = req.body.role;
+    User.find({ role: role })
         .then(data => {
             res.status(200).json(data)
         })

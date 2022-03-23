@@ -45,7 +45,7 @@ exports.login = (req, res, next) => {
                         email: body.email,
                         role: data.role,
                         id: data._id
-                    }, process.env.secret_key, { expiresIn: "1h" });
+                    }, process.env.secret_key || "secret", { expiresIn: "1h" });
                     res.status(200).json({ data: "you r in", body: req.email, token })
                 }
             }
@@ -71,28 +71,27 @@ exports.registerUser = (req, res, next) => {
         //res.redirect(307,"/employees")
     }
 
-    
 
     let user = new User({
         email: req.body.email,
         name: req.body.name,
         password: req.body.password,
         speciality:req.body.speciality,
-        hourRate:req.hourRate,
+        hourRate:req.body.hourRate ? req.body.hourRate : 0,
         phoneNumber:req.phoneNumber,
         role: req.body.role,
-        image:req.file.image
+        image:req.file.filename
     });
 
-    let token = jwt.sign({
-        email: body.email,
-        role: data.role,
-        id: data._id
-    }, process.env.secret_key, { expiresIn: "1h" });
-    
+
     bcrypt.genSalt(10).then(async salt => {
         user.password = await bcrypt.hash(user.password, salt);
         user.save().then(data => {
+            let token = jwt.sign({
+                email: data.email,
+                role: data.role,
+                id: data._id
+            }, process.env.secret_key || "secret", { expiresIn: "1h" });
             res.status(200).json({ data: "you r in", body: req.email, token })
         })
     })

@@ -5,9 +5,10 @@ const { body, query, param } = require("express-validator")
 
 router.route("/user")
     .get(controller.getAllUsers)
-    .put(controller.updateUser)
-    .delete(controller.deleteUser);
 
-router.get('/user/:role',controller.getUserByRole )
+
+router.put("/user/:id", controller.updateUser)
+router.delete("/user/:id", controller.deleteUser)
+router.get('/user/role',controller.getUserByRole )
 
 module.exports = router;

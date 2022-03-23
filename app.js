@@ -23,6 +23,8 @@ const fileFilter = (request, file, callback) => {
 const clinicRoute = require("./Routers/clinicRoute")
 const prescriptionRoute = require("./Routers/prescriptionRoute");
 const userRoute = require("./Routers/userRouter");
+const authRoute = require('./Routers/authRouter');
+
 const app = express();
 mongoose.connect("mongodb://localhost:27017/CMS")
     .then(() => {
@@ -50,8 +52,9 @@ app.use((req, res, next) => {
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }))
 app.use("/images", express.static(path.join(__dirname, "images")));
-app.use(multer({ storage, limits, fileFilter }).array("image"));
+app.use(multer({ storage, limits, fileFilter }).single("image"));
 // Routing
+app.use(authRoute)
 app.use(userRoute)
 app.use(clinicRoute)
 app.use(prescriptionRoute)
