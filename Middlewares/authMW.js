@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
         next(err)
     }
     if (decode !== undefined) {
-        req.rol = decode.role;
+        req.role = decode.role;
         req.email = decode.email;
         req.id = decode.id
         next()
