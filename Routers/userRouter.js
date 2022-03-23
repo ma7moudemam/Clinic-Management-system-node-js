@@ -8,11 +8,12 @@ router.route("/user")
     .get(controller.getAllUsers)
     
 
-router.get("/user/profile",Auth, controller.getUserById)    
+router.get("/user/profile",Auth, controller.getUserByProfile)    
 
+router.get("/user/:id", controller.getUser)
 
 router.put("/user/:id", controller.updateUser)
 router.delete("/user/:id", controller.deleteUser)
-router.get('/user/role',controller.getUserByRole )
+router.post('/user/role',Auth,controller.getUserByRole )
 
 module.exports = router;

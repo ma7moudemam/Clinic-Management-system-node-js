@@ -29,6 +29,18 @@ exports.getUserByRole = (req, res) => {
         })
 }
 
+exports.getUser = (req, res) => {
+    errHandler(req)
+     
+    let id = req.params.id;
+    User.find({ _id:  id})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            next(error);
+        })
+}
 exports.updateUser = (req,res, next) => {
     errHandler(req)
 
@@ -64,7 +76,7 @@ exports.deleteUser = (req,res, next) => {
         .catch(err => next(err))
 }
 
-exports.getUserById =  (req,res, next) =>{
+exports.getUserByProfile =  (req,res, next) =>{
     errHandler(req)
     console.log(req.id)
     User.find({_id: req.id})

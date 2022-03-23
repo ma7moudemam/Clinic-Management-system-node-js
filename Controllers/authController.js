@@ -46,7 +46,7 @@ exports.login = (req, res, next) => {
                         role: data.role,
                         id: data._id
                     }, process.env.secret_key || "secret", { expiresIn: "1h" });
-                    res.status(200).json({ data: "you r in", body: req.email, token })
+                    res.status(200).json({ data: "you r in", body: req.email, token, role: data.role, })
                 }
             }
         })  
@@ -92,7 +92,7 @@ exports.registerUser = (req, res, next) => {
                 role: data.role,
                 id: data._id
             }, process.env.secret_key || "secret", { expiresIn: "1h" });
-            res.status(200).json({ data: "you r in", body: req.email, token })
+            res.status(200).json({ data: "you r in", body: req.email, role: data.role, token })
         })
     })
     
