@@ -88,3 +88,20 @@ exports.deleteAppointment = function (req, res, next) {
 		})
 		.catch((error) => next(error));
 };
+
+// appointmentReport
+exports.getAppointmentReport = (req, res, next) => {
+	errorHandeler(req);
+
+    Appointment.find({})
+    .populate("doctors")
+    .populate("patient")
+    .populate("clinic")
+		.then((data) => {
+
+			res.status(200).send(data);
+		})
+		.catch((e) => {
+			res.status(500).send(e);
+		});
+};
