@@ -78,7 +78,7 @@ exports.registerUser = (req, res, next) => {
         password: req.body.password,
         speciality:req.body.speciality,
         hourRate:req.body.hourRate ? req.body.hourRate : 0,
-        phoneNumber:req.phoneNumber,
+        phoneNumber:req.body.phoneNumber,
         role: req.body.role,
         image:req.file.filename
     });

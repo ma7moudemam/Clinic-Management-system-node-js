@@ -32,21 +32,21 @@ exports.getUserByRole = (req, res) => {
 exports.updateUser = (req,res, next) => {
     errHandler(req)
 
-    User.findByIdAndUpdate(req.body.id, {
+    User.findByIdAndUpdate(req.params.id, {
         
             $set: {
-                userName: req.body.userName,
+                name: req.body.userName,
                 email: req.body.email,
                 hourRate: req.body.hourRate,
                 phoneNumber:req.body.phoneNumber,
-                password:req.body.password,
-                image:req.file.filename,
+                // password:req.body.password,
+                image:req.file?.filename,
                 speciality:req.body.password,
             }
         })
         .then(data => {
             if (data == null) throw new Error("User is not Find");
-           res.status(200).json({ message: "Updated" }, data);
+           res.status(200).json({ message: "Updated" });
         })
         .catch(err => next(err))
 }
@@ -54,12 +54,23 @@ exports.updateUser = (req,res, next) => {
 exports.deleteUser = (req,res, next) => {
     errHandler(req)
 
-    User.findByIdAndDelete(req.body.id)
+    User.findByIdAndDelete(req.params.id)
         .then(data => {
             if (data == null) throw new Error("User is not Found");
             fs.unlinkSync(path.join(__dirname, "..//images//") + data.image);
            res.status(200).json({ message: "Deleted" })
 
+        })
+        .catch(err => next(err))
+}
+
+exports.getUserById =  (req,res, next) =>{
+    errHandler(req)
+    console.log(req.id)
+    User.find({_id: req.id})
+        .then(data => {
+            if (data == null) throw new Error("User is not Found");
+            res.status(200).json(data)
         })
         .catch(err => next(err))
 }
