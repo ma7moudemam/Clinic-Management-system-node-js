@@ -20,6 +20,7 @@ exports.updateMedicine = function (request, response, next) {
 		{
 			$set: {
 				quantity: request.body.quantity,
+				price: request.body.price,
 			},
 		}
 	);
@@ -51,6 +52,9 @@ exports.addMedicine = function (request, response, next) {
 					name: request.body.name,
 					exp_date: request.body.exp_date,
 					quantity: request.body.quantity,
+					describtion: request.body.describtion,
+					price: request.body.price,
+					image: "http://localhost:8080/images/" + request.file.filename,
 				});
 				object
 					.save()

@@ -7,6 +7,8 @@ const schema = new mongoose.Schema(
 		exp_date: { type: String, required: true },
 		quantity: { type: Number, required: true },
 		describtion: { type: String, required: true },
+		image: String,
+		price: { type: Number, required: true },
 	},
 	{ _id: false }
 );
