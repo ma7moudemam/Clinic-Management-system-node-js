@@ -21,6 +21,7 @@ const fileFilter = (request, file, callback) => {
 		callback(null, true);
 };
 const clinicRoute = require("./Routers/clinicRoute");
+const appointmentRoute = require("./Routers/appointmentRoute");
 const prescriptionRoute = require("./Routers/prescriptionRoute");
 const userRoute = require("./Routers/userRouter");
 const authRoute = require("./Routers/authRouter");
@@ -65,6 +66,7 @@ app.use(userRoute);
 app.use(clinicRoute);
 app.use(prescriptionRoute);
 app.use(medicineRoute);
+app.use(appointmentRoute);
 app.use("/patient", patientRouter);
 app.use("/invoice", invoiceRouter);
 // errors Middleware
