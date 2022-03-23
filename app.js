@@ -25,6 +25,7 @@ const prescriptionRoute = require("./Routers/prescriptionRoute");
 const userRoute = require("./Routers/userRouter");
 const authRoute = require("./Routers/authRouter");
 const medicineRoute = require("./Routers/medicineRouter");
+const AppointmentRoute = require("./Routers/appointmentRouter");
 
 const app = express();
 mongoose
@@ -62,6 +63,7 @@ app.use(userRoute);
 app.use(clinicRoute);
 app.use(prescriptionRoute);
 app.use(medicineRoute);
+app.use(AppointmentRoute);
 // errors Middleware
 app.use((req, res) => {
 	res.status(404).json({ data: "Page Not Found" });
