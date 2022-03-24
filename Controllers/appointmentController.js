@@ -4,9 +4,8 @@ const errHandler = require("./errorHandeler");
 
 exports.getAllAppointments = (req, res, next) => {
     Appointment.find({})
-        .populate({ path: "doctors" })
-        .populate({ path: "patients" })
-        .populate({ path: "clinics" })
+        .populate({ path: "user" })
+        .populate({ path: "clinic" })
         .then(data => {
             if (data == null) throw new Error("we have no Appointment for you yet!")
             res.status(200).json(data)
@@ -16,9 +15,8 @@ exports.getAllAppointments = (req, res, next) => {
 
 exports.getAppointment = (req, res, next) => {
     Appointment.findOne({ _id: req.params.id })
-        .populate({ path: "doctors" })
-        .populate({ path: "patients" })
-        .populate({ path: "clinics" })
+    .populate({ path: "users" })
+    .populate({ path: "clinics" })
         .then(data => {
             if (data == null) throw new Error("We have no Appointment with that id")
             res.status(200).json(data)
@@ -33,10 +31,8 @@ exports.addAppointment = (req, res, next) => {
     
     let newAppointment = new Appointment({
         name: req.body.name,
-        doctors: req.body.doctors,
-        patients: req.body.patients,
+        user: req.body.user,
         clinics: req.body.clinics,
-        location: req.body.location,
         date: req.body.date,
     })
 
@@ -63,8 +59,7 @@ exports.updateAppointment = function (req, res, next) {
 		{
 			$set: {
 				name: req.body.name,
-				doctors: req.body.doctors,
-                patient:req.body.patient,
+                user: req.body.user,
                 clinic:req.body.clinic,
                 date: req.body.date,
 			},

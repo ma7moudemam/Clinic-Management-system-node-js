@@ -21,7 +21,7 @@ const fileFilter = (request, file, callback) => {
 		callback(null, true);
 };
 const clinicRoute = require("./Routers/clinicRoute");
-const appointmentRoute = require("./Routers/appointmentRoute");
+const appointmentRoute = require("./Routers/appointmentRouter");
 const prescriptionRoute = require("./Routers/prescriptionRoute");
 const userRoute = require("./Routers/userRouter");
 const authRoute = require("./Routers/authRouter");
