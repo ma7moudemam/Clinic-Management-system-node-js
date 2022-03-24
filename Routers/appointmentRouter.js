@@ -13,5 +13,6 @@ router.route("/appointment")
     .delete(controller.deleteAppointment);
 
 router.get("/appointment/:id", controller.getAppointment);
+router.get("/report", controller.getAppointmentReport)
 
 module.exports = router;

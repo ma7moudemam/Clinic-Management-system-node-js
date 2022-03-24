@@ -120,7 +120,7 @@ exports.getStatistic = async (req, res, next) => {
 
     try {
         const maleToFemale = await PatientModel.statistic()
-        res.status(201).send({maleToFemale})
+        res.status(201).send(maleToFemale)
         
     } catch (e) {
      res.status(400).send(e)   

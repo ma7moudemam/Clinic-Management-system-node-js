@@ -109,8 +109,10 @@ exports.getTotleIncome = async (req, res, next) => {
 				i++
 			}
 			totleIncome = incomeArray.reduce(reducer)
+			// totleIncome.toString()
 			// express deprecated res.send(status): Use res.sendStatus(status) instead 
-			res.sendStatus(totleIncome)
+			// res.sendStatus(totleIncome)
+			res.send(totleIncome.toString())
 		})
 		.catch((e) => {
 			res.status(500).send(e);

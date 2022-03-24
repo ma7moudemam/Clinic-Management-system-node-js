@@ -38,7 +38,7 @@ schema.statics.statistic = async function () {
     female = females.length
     male = males.length
 
-	return `M ${male} : F ${female}`;
+	return {male , female} ;
 };
 
 schema.plugin(autoIncrement, { id: "patients-auto-increament", inc_field: "_id" });
