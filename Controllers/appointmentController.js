@@ -98,7 +98,6 @@ exports.getAppointmentReport = (req, res, next) => {
     .populate("patient")
     .populate("clinic")
 		.then((data) => {
-
 			res.status(200).send(data);
 		})
 		.catch((e) => {
